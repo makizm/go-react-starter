@@ -1,0 +1,56 @@
+basePath: /
+definitions:
+  response.Error:
+    properties:
+      error:
+        type: string
+    type: object
+  response.Health:
+    properties:
+      status:
+        type: string
+    type: object
+  response.Info:
+    properties:
+      name:
+        type: string
+      time:
+        type: string
+      version:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: API server for the monorepo.
+  title: Monorepo API
+  version: 0.1.0
+paths:
+  /api/health:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Health'
+      summary: Health check
+      tags:
+      - system
+  /api/info:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Info'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Service info
+      tags:
+      - system
+swagger: "2.0"

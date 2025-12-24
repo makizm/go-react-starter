@@ -1,0 +1,35 @@
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    volumes:
+      - ./server:/app
+      - /app/tmp
+    environment:
+      - GO_ENV=development
+
+  ui:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    ports:
+      - "${UI_PORT:-5173}:5173"
+    volumes:
+      - ./ui:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://server:8080
+      - VITE_DOCS_URL=http://docs:8080
+    depends_on:
+      - server
+      - docs
+
+  docs:
+    image: swaggerapi/swagger-ui:latest
+    environment:
+      - BASE_URL=/api/docs
+      - SWAGGER_JSON=/swagger.json
+    volumes:
+      - ./docs/swagger.json:/swagger.json:ro

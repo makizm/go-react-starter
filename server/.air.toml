@@ -1,0 +1,54 @@
+# Air configuration for live reloading
+# https://github.com/air-verse/air
+
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  # Command to build the application
+  cmd = "go build -o ./tmp/api ./cmd/api"
+  # Entrypoint binary (preferred over deprecated build.bin)
+  entrypoint = ["./tmp/api"]
+  # Watch these file extensions
+  include_ext = ["go", "tpl", "tmpl", "html"]
+  # Exclude these directories
+  exclude_dir = ["tmp", "vendor", "node_modules"]
+  # Exclude these files
+  exclude_file = []
+  # Exclude files with these regex patterns
+  exclude_regex = ["_test.go"]
+  # Exclude unchanged files
+  exclude_unchanged = false
+  # Follow symlinks
+  follow_symlink = false
+  # Delay before rebuilding (in milliseconds)
+  delay = 1000
+  # Stop running old binary when build errors occur
+  stop_on_error = true
+  # Send interrupt signal before killing process
+  send_interrupt = false
+  # Delay after sending interrupt signal (in milliseconds)
+  kill_delay = 500
+  # Arguments to pass to the binary
+  args_bin = []
+
+  # Poll files for changes instead of using fsnotify (recommended for Docker/Podman bind mounts)
+  poll = true
+  poll_interval = 500
+
+[log]
+  # Show log time
+  time = false
+  # Only show main log
+  main_only = false
+
+[color]
+  # Customize colors
+  main = "magenta"
+  watcher = "cyan"
+  build = "yellow"
+  runner = "green"
+
+[misc]
+  # Delete tmp directory on exit
+  clean_on_exit = true
